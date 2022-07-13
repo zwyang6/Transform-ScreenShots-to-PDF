@@ -1,6 +1,7 @@
+
 # Transfrom-ImageShots-to-PDF-in-Mac
 - ## Descripytion 
-**On Mac, you can get screenshots by cmd + shif + 3 when you want to recorde contents of a presentation or a tutorial video. This Python Script could help you collect all screenshots by Time Sequence and transform them into a PDF.**
+**On Mac, you can get screenshots by cmd + shif + 3 when you want to recorde contents of a presentation or a tutorial video. This Python Script could help you collect all screenshots by Time Sequence and transform them (all screenshots are required collected at the same day) into a PDF.**
 
 - ## Packages Required
 **argparse img2pdf**
@@ -11,5 +12,5 @@ Python img2pdf_.py --dir_path=THE_PATH_OF_SCREEN_SHOTS("\Users\YOURNAME\DESKTOP"
 ```
 
 - ## NOTE:
-***ALL SCREEN SHOTS WILL BE MOVED TO A NEW FILE NAMED xxxtest on your DESKTOP***
+***ALL SCREEN SHOTS WILL BE MOVED TO A NEW FILE NAMED {Date}_ScreenShots_Cllection on your DESKTOP***
 

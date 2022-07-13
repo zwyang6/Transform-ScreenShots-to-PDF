@@ -3,10 +3,13 @@ import img2pdf
 from PIL import Image
 import argparse
 import shutil 
+from datetime import date
+
+today = str(date.today()).replace('-','')
 
 parser = argparse.ArgumentParser(description=f"Image2Pdf\nTransform all the ImageShots into PDF, and mv these shots to /Users/Jaye/Desktop/xxxtest/")
 parser.add_argument("--dir_path",type=str,default="/Users/Jaye/Desktop/",help="ImageShots Where saved")
-parser.add_argument("--pdf_path",type=str,default="/Users/Jaye/Desktop/01.pdf",help="PDF Where you want to save")
+parser.add_argument("--pdf_path",type=str,default=f"/Users/Jaye/Desktop/Postgraduate Files/People's Lectures/LabMiccai_PaperSharingLecture/{today}_Lecture.pdf",help="PDF Where you want to save")
 args=parser.parse_args()
 
 dir_path = args.dir_path # image files
@@ -21,12 +24,14 @@ if '.DS_Store' in img_lst:
 #: move all shots to a new file 
 $: ---------------------------------------------#
 '''
-target_path = "/Users/Jaye/Desktop/xxxtest/"
+target_path = f"/Users/Jaye/Desktop/{date.today()}_ScreenShots_Collection/"
+if os.path.exists(target_path):
+    shutil.rmtree(target_path)
 if not os.path.exists(target_path):
     os.mkdir(target_path)
 
 for fname in img_lst:
-    if fname.endswith(".png"):
+    if fname.endswith(".png") and str(date.today()) in fname: # move all screenshots from today to path
         img_path = os.path.join(dir_path,fname)
         shutil.move(img_path,target_path)
 
@@ -44,7 +49,7 @@ reorder = []
 reorder_base = []
 for fname in img_lst:
     if fname.endswith(".png"):
-        file = fname.split('.')[1:3]
+        file = fname.split(' ')[-1].split('.')[0:3] # 屏幕快照 2022-7-12 14.18.07.png -> [14, 18, 07]
         file_base = fname.split('.')[0]
         reorder.append(file)
         reorder_base.append(file_base)
@@ -62,15 +67,22 @@ for i in range(0,len(reorder_base)):
             
         elif min[0] == reorder[j][0]:
             if min[1] < reorder[j][1]:
-                min  = reorder[index]     
+                min  = reorder[index] 
+
+            elif min[1] == reorder[j][1]:
+                if min[2] < reorder[j][2]:
+                    min = reorder[index]
+                else:
+                    index = j
+                    min = reorder[j]
+            
             else:
                 index = j
-                min  = reorder[j]
+                min = reorder[j]
                 
         elif min[0] > reorder[j][0]:
             index = j
             min = reorder[j]
-    
     
     reorder[i], reorder[index] = reorder[index], reorder[i]
     img_lst[i], img_lst[index] = img_lst[index], img_lst[i] 
